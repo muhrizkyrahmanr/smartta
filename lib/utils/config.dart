@@ -1,0 +1,1 @@
+const String API_V2 = "https://smartta.id/api";

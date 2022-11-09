@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:smartta/constants/colors.dart';
+import 'package:smartta/menu_card.dart';
+import 'package:smartta/model/model_menu.dart';
+import 'package:smartta/services/services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,39 +13,102 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+
 class _HomePageState extends State<HomePage> {
+  List listMenu = [];
+  bool isLoading = true;
+
+  Future _getMenuServices() async {
+    var response = await Services().getDataServices();
+    if (!mounted) return;
+    setState(() {
+      listMenu = response;
+      isLoading = false;
+    });
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    _getMenuServices();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: Column(
-          children: const [
-            AppBar()
-          ],
-        ),
+        body: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  children: <Widget>[buildHeader(), buildCoursel()],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: Column(
+                    children: [
+                      if(isLoading == true)...[
+                        Padding(
+                          padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
+                          child: Center(child: CircularProgressIndicator(),),
+                        ),
+                      ]else...[
+                        GridView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: 6,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              childAspectRatio: 0.8,
+                              crossAxisSpacing: 20,
+                              mainAxisSpacing: 24,
+                            ),
+                            itemBuilder: (context, index){
+                              return index == 5
+                                  ? MenuCard(listMore: true,)
+                                  : MenuCard(
+                                      modelMenu: listMenu[index],
+                                      listMore: false,
+                                    );
+                            },
+                        ),
+                      ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Jasa Populer", style: Theme.of(context).textTheme.bodyLarge,),
+                          TextButton(
+                              onPressed: () => {},
+                              child: Text("Lihat Semua >", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: kPrimaryColor))),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Produk Rekomendasi", style: Theme.of(context).textTheme.bodyLarge,),
+                          TextButton(
+                              onPressed: () => {},
+                              child: Text("Lihat Semua >", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: kPrimaryColor))),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            )
+        )
       ),
-    );
-  }
-}
-
-class AppBar extends StatelessWidget {
-  const AppBar({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: AlwaysScrollableScrollPhysics(),
-      child: Stack(
-        children: <Widget>[buildHeader(), buildCoursel()],
-      )
     );
   }
 
   buildHeader(){
     return Container(
-        padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 40, left: 16, right: 16),
         height: 200,
         width: double.infinity,
         decoration: const BoxDecoration(

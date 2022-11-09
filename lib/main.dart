@@ -32,6 +32,7 @@ class _AppState extends State<App> {
     return MaterialApp(
         theme: ThemeData(
           primarySwatch: colorCelticBlue,
+          fontFamily: 'poppins'
         ),
         debugShowCheckedModeBanner: false,
         home: BaseScreen()
