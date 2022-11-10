@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:smartta/detail_jasa_page.dart';
+import 'package:smartta/jasa_page.dart';
 import 'package:smartta/model/model_menu.dart';
 
 class MenuCard extends StatefulWidget {
@@ -15,7 +17,21 @@ class _MenuCardState extends State<MenuCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        if(widget.listMore == true){
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => JasaPage())
+          );
+        }else{
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DetailJasaPage(id: widget.modelMenu!.id.toString(),))
+          );
+        }
+      },
       child: Container(
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
