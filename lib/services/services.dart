@@ -33,11 +33,12 @@ class Services {
         body: json.encode(<String, String>{
           'id_services': id,
         }));
+    var responseJson = json.decode(response.body);
     if (response.statusCode == 200) {
       if (response.body == '{"data":null}') {
         return throw Exception('No results');
       } else {
-        var baseResponse = ModelDetailJasa<ModelPaket>.fromJson(json.decode(response.body), (paket) => ModelPaket.fromJson(paket));
+        var baseResponse = ModelDetailJasa.fromJson(responseJson['data']);
         return baseResponse;
       }
     } else {

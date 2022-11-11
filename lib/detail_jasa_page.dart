@@ -17,7 +17,9 @@ class DetailJasaPage extends StatefulWidget {
 class _DetailJasaPageState extends State<DetailJasaPage> {
   bool isLoading = true;
   ModelDetailJasa? modelDetailJasa;
-  ModelPaket? modelPaket;
+  List<ModelPaket>? modelPaket;
+  int? jenisPaket;
+  int jumlahItem = 0;
 
   Future _getDetailJasa() async {
     setState(() {
@@ -26,9 +28,14 @@ class _DetailJasaPageState extends State<DetailJasaPage> {
     var response = await Services().getDetailDataServices(widget.id);
     if (!mounted) return;
     setState(() {
-      modelDetailJasa = response.paket;
+      modelDetailJasa = response;
+      modelPaket = modelDetailJasa!.paket;
+      isLoading = false;
     });
-    print(modelPaket!.paket.toString());
+  }
+
+  Future onRefresh() async{
+    await _getDetailJasa();
   }
 
 
@@ -53,21 +60,127 @@ class _DetailJasaPageState extends State<DetailJasaPage> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: SizedBox(
-            width: size.width, height: size.height, child: buildDetailJasa()),
+        padding: EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          physics: ScrollPhysics(),
+          child: SizedBox(
+              width: size.width, height: size.height, child: buildDetailJasa()),
+        )
       ),
     );
   }
 
   Widget buildDetailJasa(){
-    return SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          ],
-        )
+    return isLoading == true
+        ? Center(child: CircularProgressIndicator(),)
+        : Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Card(
+          elevation: 1.0,
+          margin: EdgeInsets.only(
+            bottom: 5.0,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0,),
+          ),
+          child: Column(
+            children: [
+              Image.network("${modelDetailJasa!.background}"),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Deskripsi Pekerjaan", style: TextStyle(fontSize: 12.0,fontWeight: FontWeight.w100,),),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    Text("${modelDetailJasa!.deskripsi_pekerjaan}")
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 8.0,
+        ),
+        Card(
+          elevation: 1.0,
+          margin: EdgeInsets.only(
+            bottom: 5.0,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0,),
+          ),
+          child: Padding(
+            padding: EdgeInsets.only(left: 8.0, right: 8.0),
+            child: Row(
+              children: [
+                Text("Masukkan Jumlah"),
+                Spacer(),
+                IconButton(
+                  icon: const Icon(Icons.add),
+                  onPressed: () {
+                    if(jumlahItem != 0){
+                      setState(() {
+                        jumlahItem--;
+                      });
+                    }
+                  },
+                ),
+                Text(jumlahItem.toString()),
+                IconButton(
+                  icon: const Icon(Icons.add),
+                  onPressed: () {
+                    setState(() {
+                      if(jumlahItem != 0){
+                        jumlahItem++;
+                      }
+                    });
+                  },
+                ),
+              ],
+            ),
+          )
+        ),
+        SizedBox(
+          height: 8.0,
+        ),
+        Expanded(
+          child: ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: modelPaket!.length,
+            itemBuilder: (context, i){
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    jenisPaket = modelPaket![i].id;
+                  });
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 12, horizontal: 16),
+                  margin: const EdgeInsets.only(bottom: 8.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: jenisPaket == modelPaket![i].id
+                        ? kPrimaryColor
+                        : kGrey
+                  ),
+                  child: Text(
+                    "${modelPaket![i].paket}",
+                    style: const TextStyle(color: kBlack),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

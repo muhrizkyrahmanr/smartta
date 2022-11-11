@@ -9,7 +9,7 @@ class ModelDetailJasa <T>{
   String? url_gambar;
   String? background;
   String? gambar_site;
-  T? paket;
+  List<ModelPaket> paket;
 
   ModelDetailJasa({
     required this.id,
@@ -23,8 +23,11 @@ class ModelDetailJasa <T>{
     required this.paket
   });
 
-  factory ModelDetailJasa.fromJson(Map<String?, dynamic> json, Function(Map<String, dynamic>) build) {
-    return ModelDetailJasa<T>(
+  factory ModelDetailJasa.fromJson(Map<String?, dynamic> json) {
+    var paketJson = json['paket'] as List;
+    List<ModelPaket> _paket = paketJson.map((paket) => ModelPaket.fromJson(paket)).toList();
+
+    return ModelDetailJasa(
         id: json['id'],
         nama: json['nama'],
         is_jumlah: json['is_jumlah'],
@@ -33,6 +36,7 @@ class ModelDetailJasa <T>{
         url_gambar: json['url_gambar'],
         background: json['background'],
         gambar_site: json['gambar_site'],
-        paket: build(json['paket'] ?? {}));
+        paket: _paket
+    );
   }
 }
