@@ -70,6 +70,8 @@ flutter:
    - transaksi.png
    - transaksi_outlined.png
    - more.png
+   - add.png
+   - less.png
 
   fonts:
     - family: poppins

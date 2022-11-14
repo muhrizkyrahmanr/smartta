@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smartta/constants/colors.dart';
 import 'package:smartta/model/model_detail_jasa.dart';
 import 'package:smartta/model/model_menu.dart';
@@ -20,6 +21,8 @@ class _DetailJasaPageState extends State<DetailJasaPage> {
   List<ModelPaket>? modelPaket;
   int? jenisPaket;
   int jumlahItem = 0;
+  int harga = 0;
+  final TextEditingController _controllerCatatan = TextEditingController();
 
   Future _getDetailJasa() async {
     setState(() {
@@ -67,6 +70,7 @@ class _DetailJasaPageState extends State<DetailJasaPage> {
               width: size.width, height: size.height, child: buildDetailJasa()),
         )
       ),
+      bottomNavigationBar: buildButton(),
     );
   }
 
@@ -104,6 +108,106 @@ class _DetailJasaPageState extends State<DetailJasaPage> {
             ],
           ),
         ),
+        if(modelPaket!.length > 0)...[
+          SizedBox(
+            height: 8.0,
+          ),
+          Expanded(
+            child: Card(
+              elevation: 1.0,
+              margin: EdgeInsets.only(
+                bottom: 5.0,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0,),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: modelPaket!.length,
+                  itemBuilder: (context, i){
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          jenisPaket = modelPaket![i].id;
+                          harga = int.parse(modelPaket![i].harga.toString());
+                          if(jumlahItem == 0){
+                            jumlahItem = 1;
+                          }else{
+                            harga = harga * jumlahItem;
+                          }
+                        });
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 16),
+                        margin: const EdgeInsets.only(bottom: 8.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: jenisPaket == modelPaket![i].id
+                                ? kPrimaryColor.withOpacity(0.5)
+                                : kGrey
+                        ),
+                        child: Text(
+                          "${modelPaket![i].paket}",
+                          style: const TextStyle(color: kBlack),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            )
+          )
+        ],
+        SizedBox(
+          height: 8.0,
+        ),
+        Card(
+            elevation: 1.0,
+            margin: EdgeInsets.only(
+              bottom: 5.0,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0,),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text("Masukkan Jumlah"),
+                  Spacer(),
+                  IconButton(
+                    icon: Image.asset(
+                      'assets/less.png',
+                      width: 20,
+                    ),
+                    onPressed: () {
+                      if(jumlahItem != 0){
+                        setState(() {
+                          jumlahItem--;
+                        });
+                      }
+                    },
+                  ),
+                  Text(jumlahItem.toString()),
+                  IconButton(
+                    icon: Image.asset(
+                      'assets/add.png',
+                      width: 20,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        jumlahItem++;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            )
+        ),
         SizedBox(
           height: 8.0,
         ),
@@ -116,71 +220,108 @@ class _DetailJasaPageState extends State<DetailJasaPage> {
             borderRadius: BorderRadius.circular(5.0,),
           ),
           child: Padding(
-            padding: EdgeInsets.only(left: 8.0, right: 8.0),
-            child: Row(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
               children: [
-                Text("Masukkan Jumlah"),
-                Spacer(),
-                IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    if(jumlahItem != 0){
-                      setState(() {
-                        jumlahItem--;
-                      });
-                    }
-                  },
-                ),
-                Text(jumlahItem.toString()),
-                IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    setState(() {
-                      if(jumlahItem != 0){
-                        jumlahItem++;
-                      }
-                    });
-                  },
-                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Catatan", style: TextStyle(fontSize: 12.0,fontWeight: FontWeight.w100,),),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    TextFormField(
+                      controller: _controllerCatatan,
+                      keyboardType: TextInputType.text,
+                      maxLines: 4,
+                      autofocus: false,
+                      textAlign: TextAlign.left,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(vertical: 15),
+                        hintText: "Masukkan Catatan",
+                        hintStyle: TextStyle(color: Colors.grey),
+                      ),
+                      autocorrect: false,
+                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                    )
+                  ],
+                )
               ],
             ),
-          )
-        ),
-        SizedBox(
-          height: 8.0,
-        ),
-        Expanded(
-          child: ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: modelPaket!.length,
-            itemBuilder: (context, i){
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    jenisPaket = modelPaket![i].id;
-                  });
-                },
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 12, horizontal: 16),
-                  margin: const EdgeInsets.only(bottom: 8.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: jenisPaket == modelPaket![i].id
-                        ? kPrimaryColor
-                        : kGrey
-                  ),
-                  child: Text(
-                    "${modelPaket![i].paket}",
-                    style: const TextStyle(color: kBlack),
-                  ),
-                ),
-              );
-            },
           ),
         ),
       ],
+    );
+  }
+
+  Widget buildButton() {
+    return Container(
+      height: 60.0,
+      padding: EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 1.0,
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1.0,
+          )
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Material(
+              color: Colors.transparent,
+              elevation: 0.0,
+              borderRadius: BorderRadius.circular(5.0),
+              child: Container(
+                width: 50.0,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Total Bayar :',
+                    ),
+                    Text(
+                      'Rp. ${harga.toString()}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 5.0,
+          ),
+          Material(
+            elevation: 0.0,
+            color: kPrimaryColor.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(5.0),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(5.0),
+              onTap: () {},
+              child: Container(
+                width: 160.0,
+                child: Center(
+                  child: Text(
+                    'Pesan Sekarang',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
