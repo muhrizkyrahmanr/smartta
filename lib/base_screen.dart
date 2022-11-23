@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:smartta/constants/colors.dart';
 import 'package:smartta/home_page.dart';
 import 'package:smartta/constants/size.dart';
+import 'package:smartta/profil_page.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class _BaseScreenState extends State<BaseScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     HomePage(),
-    HomePage(),
+    ProfilPage(),
   ];
 
   @override

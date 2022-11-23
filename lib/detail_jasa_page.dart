@@ -224,6 +224,32 @@ class _DetailJasaPageState extends State<DetailJasaPage> {
                             height: 8.0,
                           ),
                           Card(
+                              elevation: 1.0,
+                              margin: EdgeInsets.only(
+                                bottom: 5.0,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0,),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(15.0),
+                                child: Row(
+                                  children: [
+                                    Text("Pilih Alamat"),
+                                    Spacer(),
+                                    const Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 16,
+                                      color: kPrimaryColor,
+                                    ),
+                                  ],
+                                ),
+                              )
+                          ),
+                          SizedBox(
+                            height: 8.0,
+                          ),
+                          Card(
                             elevation: 1.0,
                             margin: EdgeInsets.only(
                               bottom: 5.0,
@@ -273,7 +299,7 @@ class _DetailJasaPageState extends State<DetailJasaPage> {
                 left: 0.1,
                 right: 0.1,
                 child: Container(
-                  height: 60.0,
+                  height: 65.0,
                   padding: EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
                     color: Colors.white,

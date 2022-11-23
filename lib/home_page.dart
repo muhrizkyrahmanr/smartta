@@ -110,7 +110,6 @@ class _HomePageState extends State<HomePage> {
     return Container(
         padding: const EdgeInsets.only(top: 40, left: 16, right: 16),
         height: 200,
-        width: double.infinity,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(20),

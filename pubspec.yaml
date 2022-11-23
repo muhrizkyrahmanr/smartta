@@ -72,6 +72,9 @@ flutter:
    - more.png
    - add.png
    - less.png
+   - how_outlined.png
+   - info_outlined.png
+   - password_outlined.png
 
   fonts:
     - family: poppins
