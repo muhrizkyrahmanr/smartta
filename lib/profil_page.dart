@@ -66,7 +66,7 @@ class _ProfilPageState extends State<ProfilPage>{
                 onTap: () => {},
                 child: CircleAvatar(
                   backgroundColor: kGrey,
-                  backgroundImage: NetworkImage(""),
+                  backgroundImage: NetworkImage("https://st.depositphotos.com/1144472/2003/i/600/depositphotos_20030237-stock-photo-cheerful-young-man-over-white.jpg"),
                   radius: 35,
                 ),
               ),
@@ -74,14 +74,15 @@ class _ProfilPageState extends State<ProfilPage>{
                 width: 12.0,
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Tess',
+                    'Akun Simulasi',
                     style: const TextStyle(
                         fontWeight: FontWeight.w500, fontSize: 18.0, color: kWhite),
                   ),
                   Text(
-                    '0811',
+                    '+628',
                     style: const TextStyle(
                         fontWeight: FontWeight.w500, fontSize: 18.0, color: kWhite),
                   ),
