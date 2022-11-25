@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:carousel_pro/carousel_pro.dart';
 import 'package:smartta/constants/colors.dart';
 import 'package:smartta/menu_card.dart';
 import 'package:smartta/model/model_menu.dart';
 import 'package:smartta/services/services.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,8 +15,19 @@ class HomePage extends StatefulWidget {
 
 
 class _HomePageState extends State<HomePage> {
+  final CarouselController _carouselController = CarouselController();
+  List listBanner = [];
+  int _currentIndex = 0;
   List listMenu = [];
   bool isLoading = true;
+
+  Future _getBanner() async {
+    var response = await Services().getBannerServices();
+    if (!mounted) return;
+    setState(() {
+      listBanner = response;
+    });
+  }
 
   Future _getMenuServices() async {
     var response = await Services().getDataServices();
@@ -31,6 +42,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _getBanner();
     _getMenuServices();
   }
 
@@ -78,19 +90,19 @@ class _HomePageState extends State<HomePage> {
                             },
                         ),
                       ],
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     Text("Jasa Populer", style: Theme.of(context).textTheme.bodyLarge,),
+                      //     TextButton(
+                      //         onPressed: () => {},
+                      //         child: Text("Lihat Semua >", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: kPrimaryColor))),
+                      //   ],
+                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Jasa Populer", style: Theme.of(context).textTheme.bodyLarge,),
-                          TextButton(
-                              onPressed: () => {},
-                              child: Text("Lihat Semua >", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: kPrimaryColor))),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Produk Rekomendasi", style: Theme.of(context).textTheme.bodyLarge,),
+                          Text("Artikel", style: Theme.of(context).textTheme.bodyLarge,),
                           TextButton(
                               onPressed: () => {},
                               child: Text("Lihat Semua >", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: kPrimaryColor))),
@@ -146,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: TextField(
                       decoration: InputDecoration(
-                        hintText: 'Pencarian Produk',
+                        hintText: 'Pencarian Jasa',
                         suffixIcon: Icon(Icons.search),
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.all(20),
@@ -165,42 +177,87 @@ class _HomePageState extends State<HomePage> {
     return Padding(
       padding: EdgeInsets.only(top: 120.0, left: 16.0, right: 16.0),
       child: Container(
-          height: 180.0,
-          width: double.infinity,
+          height: 170.0,
           child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
             ),
             child: new ClipRRect(
               borderRadius: BorderRadius.circular(16.0),
-              child: Carousel(
-                dotSize: 4.0,
-                dotSpacing: 15.0,
-                dotColor: kPrimaryColor.withOpacity(0.5),
-                indicatorBgPadding: 5.0,
-                dotIncreasedColor: kPrimaryColor,
-                dotBgColor: Colors.transparent,
-                dotVerticalPadding: 5.0,
-                dotPosition: DotPosition.bottomRight,
-                images: [
-                  Image.network(
-                    "https://www.niagahoster.co.id/blog/wp-content/uploads/2019/10/20-Template-Web-Gratis-dan-Responsive-untuk-Anda.png",
-                    fit: BoxFit.cover,
-                  ),
-                  Image.network(
-                    "https://www.niagahoster.co.id/blog/wp-content/uploads/2019/04/Download-Template-Bootstrap-Gratis-Untuk-Website-Anda-1.png",
-                    fit: BoxFit.cover,
-                  ),
-                  Image.network(
-                    "https://www.niagahoster.co.id/blog/wp-content/uploads/2019/11/template-blogger-responsive-gratis.png",
-                    fit: BoxFit.cover,
+              child: Stack(
+                children: [
+                  CarouselSlider(
+                      items: [
+                        for (var i = 0; i < listBanner.length; i++)
+                          Stack(
+                            children: [
+                              ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image.network(
+                                    "${listBanner[i].url_gambar}",
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Container(
+                                        alignment: Alignment.center,
+                                        child: const Text(
+                                          "Gagal Memuat Gambar!",
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                      );
+                                    },
+                                  )),
+                            ],
+                          )
+                      ],
+                      carouselController: _carouselController,
+                      options: CarouselOptions(
+                          viewportFraction: 1,
+                          aspectRatio: 2.4,
+                          autoPlay: true,
+                          enlargeCenterPage: true,
+                          initialPage: 2,
+                          pauseAutoPlayOnTouch: true,
+                          autoPlayInterval: const Duration(seconds: 7),
+                          autoPlayAnimationDuration:
+                          const Duration(milliseconds: 800),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              _currentIndex = index;
+                            });
+                          })),
+                  Container(
+                    alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 16.0, bottom: 13.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: listBanner.asMap().entries.map((entry) {
+                            return GestureDetector(
+                              onTap: () => _carouselController.animateToPage(entry.key),
+                              child: Container(
+                                width: 8.0,
+                                height: 8.0,
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 8.0, horizontal: 4.0),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: (Theme.of(context).brightness == Brightness.dark
+                                        ? Colors.white
+                                        : kPrimaryColor)
+                                        .withOpacity(_currentIndex == entry.key ? 0.9 : 0.4)),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
                   ),
                 ],
               ),
+              ),
             ),
           )
-      ),
-    );
+      );
   }
 }
 
