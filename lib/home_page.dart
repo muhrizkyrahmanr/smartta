@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   List listMenu = [];
   bool isLoading = true;
+  List listArtikel = [];
 
   Future _getBanner() async {
     var response = await Services().getBannerServices();
@@ -38,12 +39,21 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future _getArtikelServices() async {
+    var response = await Services().getArtikelServices();
+    if (!mounted) return;
+    setState(() {
+      listArtikel = response;
+    });
+  }
+
 
   @override
   void initState() {
     super.initState();
     _getBanner();
     _getMenuServices();
+    _getArtikelServices();
   }
 
   @override
@@ -108,6 +118,7 @@ class _HomePageState extends State<HomePage> {
                               child: Text("Lihat Semua >", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: kPrimaryColor))),
                         ],
                       ),
+                      itemArtikel(MediaQuery.of(context).size),
                     ],
                   ),
                 )
@@ -115,6 +126,58 @@ class _HomePageState extends State<HomePage> {
             )
         )
       ),
+    );
+  }
+
+  Widget itemArtikel(size) {
+    return SizedBox(
+      height: size.height / 1.1,
+      child: Expanded(
+          child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: listArtikel.length < 3
+                  ? listArtikel.length
+                  : 3,
+              itemBuilder: (context, i) {
+                return GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 15.0),
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.10),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(3.0),
+                                  decoration: BoxDecoration(
+                                    color: kPrimaryColor.withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text("${listArtikel[i].jenis}", style: TextStyle(color: kWhite, fontSize: 12.0),),
+                                ),
+                                Text("${listArtikel[i].title}", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14.0),),
+                              ],
+                            ),
+                            Spacer(),
+                            Image.network(listArtikel[i].url_gambar,width: 80,),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              }),),
     );
   }
 
