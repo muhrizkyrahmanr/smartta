@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smartta/constants/colors.dart';
+import 'package:smartta/detailartikel_page.dart';
 import 'package:smartta/menu_card.dart';
 import 'package:smartta/model/model_menu.dart';
 import 'package:smartta/services/services.dart';
@@ -118,7 +119,71 @@ class _HomePageState extends State<HomePage> {
                               child: Text("Lihat Semua >", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: kPrimaryColor))),
                         ],
                       ),
-                      itemArtikel(MediaQuery.of(context).size),
+                      MediaQuery.removePadding(
+                        context: context,
+                        removeTop: true,
+                        child:  ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: listArtikel.length < 3
+                                ? listArtikel.length
+                                : 3,
+                            itemBuilder: (context, i) {
+                              return GestureDetector(
+                                onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => DetailArtikelPage(judul: listArtikel[i].title, slug: listArtikel[i].slug,)
+                                        )
+                                    );
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(bottom: 15.0),
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.withOpacity(0.10),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.all(3.0),
+                                                decoration: BoxDecoration(
+                                                  color: kPrimaryColor.withOpacity(0.5),
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                                child: Text("${listArtikel[i].jenis}", style: TextStyle(color: kWhite, fontSize: 12.0),),
+                                              ),
+                                              Container(
+                                                width: 200,
+                                                child: Text("${listArtikel[i].title}", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14.0),),
+                                              ),
+                                            ],
+                                          ),
+                                          Spacer(),
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(10),
+                                            child: Image.network(listArtikel[i].url_gambar,width: 80,),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }),
+                      )
                     ],
                   ),
                 )

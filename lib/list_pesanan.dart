@@ -36,7 +36,7 @@ class _ListPesananState extends State<ListPesanan> {
         child: Padding(
           padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
           child: Container(
-            height: 100,
+            height: 110,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
