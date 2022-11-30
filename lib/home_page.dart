@@ -167,7 +167,7 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                               Container(
                                                 width: 200,
-                                                child: Text("${listArtikel[i].title}", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14.0),),
+                                                child: Text("${listArtikel[i].title}", maxLines: 3, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14.0),),
                                               ),
                                             ],
                                           ),

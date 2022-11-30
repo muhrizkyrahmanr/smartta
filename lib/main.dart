@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:smartta/constants/material_colors.dart';
 import 'package:smartta/base_screen.dart';
+import 'package:smartta/login_page.dart';
 
 
 class MyHttpOverrides extends HttpOverrides {
@@ -35,7 +36,7 @@ class _AppState extends State<App> {
           fontFamily: 'poppins'
         ),
         debugShowCheckedModeBanner: false,
-        home: BaseScreen()
+        home: LoginPage()
     );
   }
 }
