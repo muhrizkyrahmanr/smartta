@@ -16,6 +16,7 @@ class _TransaksiPageState extends State<TransaksiPage> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             bottom: const TabBar(
               indicatorColor: kWhite,
               labelColor: kWhite,

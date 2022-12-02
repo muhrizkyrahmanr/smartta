@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smartta/chat_mitra_page.dart';
 import 'package:smartta/constants/colors.dart';
 
 class DetailTransaksi extends StatefulWidget {
@@ -114,18 +115,22 @@ class _DetailTransaksiState extends State<DetailTransaksi> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Mitra Simulasi",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0, color: Colors.black)),
+                              Text("Mitra Simulasi",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
                               Text("Alamat",style: TextStyle(fontSize: 12.0)),
                             ],
                           ),
                         ),
                         Spacer(),
                         IconButton(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context){
+                              return ChatMitraPage();
+                            }));
+                          },
                           icon: Icon(
                             Icons.chat,
                           ),
                           color: kPrimaryColor.withOpacity(0.5),
-                          onPressed: () {},
                         )
                       ],
                     ),
