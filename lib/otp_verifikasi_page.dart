@@ -40,84 +40,108 @@ class _OtpVerifikasiPageState extends State<OtpVerifikasiPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
+                      Container(
+                        decoration: new BoxDecoration(
+                          borderRadius: new BorderRadius.circular(16.0),
+                          color: Colors.grey.shade300,
+                        ),
                         height: 58,
                         width: 54,
-                        child: TextFormField(
-                          onSaved: (pin1) {},
-                          onChanged: (value){
-                            if(value.length == 1){
-                              FocusScope.of(context).nextFocus();
-                            }
-                          },
-                          decoration: InputDecoration(hintText: "0"),
-                          style: Theme.of(context).textTheme.headline6,
-                          keyboardType: TextInputType.number,
-                          textAlign: TextAlign.center,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(1),
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
+                        child: Center(
+                          child: TextFormField(
+                            onSaved: (pin1) {},
+                            onChanged: (value){
+                              if(value.length == 1){
+                                FocusScope.of(context).nextFocus();
+                              }
+                            },
+                            decoration: new InputDecoration.collapsed(hintText: "0"),
+                            style: Theme.of(context).textTheme.headline6,
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(1),
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                          ),
                         ),
                       ),
-                      SizedBox(
+                      Container(
+                        decoration: new BoxDecoration(
+                          borderRadius: new BorderRadius.circular(16.0),
+                          color: Colors.grey.shade300,
+                        ),
                         height: 58,
                         width: 54,
-                        child: TextFormField(
-                          onSaved: (pin2) {},
-                          onChanged: (value){
-                            if(value.length == 1){
-                              FocusScope.of(context).nextFocus();
-                            }
-                          },
-                          decoration: InputDecoration(hintText: "0"),
-                          style: Theme.of(context).textTheme.headline6,
-                          keyboardType: TextInputType.number,
-                          textAlign: TextAlign.center,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(1),
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
+                        child: Center(
+                          child: TextFormField(
+                            onSaved: (pin2) {},
+                            onChanged: (value){
+                              if(value.length == 1){
+                                FocusScope.of(context).nextFocus();
+                              }
+                            },
+                            decoration: new InputDecoration.collapsed(hintText: "0"),
+                            style: Theme.of(context).textTheme.headline6,
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(1),
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                          ),
                         ),
                       ),
-                      SizedBox(
+                      Container(
+                        decoration: new BoxDecoration(
+                          borderRadius: new BorderRadius.circular(16.0),
+                          color: Colors.grey.shade300,
+                        ),
                         height: 58,
                         width: 54,
-                        child: TextFormField(
-                          onSaved: (pin3) {},
-                          onChanged: (value){
-                            if(value.length == 1){
-                              FocusScope.of(context).nextFocus();
-                            }
-                          },
-                          decoration: InputDecoration(hintText: "0"),
-                          style: Theme.of(context).textTheme.headline6,
-                          keyboardType: TextInputType.number,
-                          textAlign: TextAlign.center,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(1),
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
+                        child: Center(
+                          child: TextFormField(
+                            onSaved: (pin3) {},
+                            onChanged: (value){
+                              if(value.length == 1){
+                                FocusScope.of(context).nextFocus();
+                              }
+                            },
+                            decoration: new InputDecoration.collapsed(hintText: "0"),
+                            style: Theme.of(context).textTheme.headline6,
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(1),
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                          ),
                         ),
                       ),
-                      SizedBox(
+                      Container(
+                        decoration: new BoxDecoration(
+                          borderRadius: new BorderRadius.circular(16.0),
+                          color: Colors.grey.shade300,
+                        ),
                         height: 58,
                         width: 54,
-                        child: TextFormField(
-                          onSaved: (pin4) {},
-                          onChanged: (value){
-                            if(value.length == 1){
-                              FocusScope.of(context).nextFocus();
-                            }
-                          },
-                          decoration: InputDecoration(hintText: "0"),
-                          style: Theme.of(context).textTheme.headline6,
-                          keyboardType: TextInputType.number,
-                          textAlign: TextAlign.center,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(1),
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
+                        child: Center(
+                          child: TextFormField(
+                            onSaved: (pin4) {},
+                            onChanged: (value){
+                              if(value.length == 1){
+                                FocusScope.of(context).nextFocus();
+                              }
+                            },
+                            decoration: new InputDecoration.collapsed(hintText: "0"),
+                            style: Theme.of(context).textTheme.headline6,
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(1),
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                          ),
                         ),
                       ),
                     ],
