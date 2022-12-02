@@ -110,7 +110,7 @@ class _DetailTransaksiState extends State<DetailTransaksi> {
                           width: 15.0,
                         ),
                         Container(
-                          width: 200,
+                          width: 150,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -175,75 +175,73 @@ class _DetailTransaksiState extends State<DetailTransaksi> {
                 borderRadius: BorderRadius.circular(5.0),
                 color: Colors.grey.withOpacity(0.10),
               ),
-              child: Column(
-                children: [
-                  Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Flexible(
-                        child: ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: list.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return currentStep >= index ? Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(top: 5),
-                                  child: Text(list[index]['date']!),
-                                ),
-                                const SizedBox(width: 25),
-                                Column(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Status Pesanan", style: TextStyle(fontSize: 12.0, color: Colors.grey.shade400,)),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                      child: ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: list.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return currentStep >= index ? Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(top: 5),
+                                child: Text(list[index]['date']!),
+                              ),
+                              const SizedBox(width: 5),
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.check_circle, color: kPrimaryColor.withOpacity(0.5), size: 20.0,),
+                                  const SizedBox(height: 5),
+                                  index < list.length - 1 ? Container(
+                                      height: 15,
+                                      width: 1,
+                                      color: kPrimaryColor.withOpacity(0.5),
+                                  ) : Container(),
+                                ],
+                              ),
+                              const SizedBox(width: 5),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    const Icon(Icons.check_circle, color: kPrimaryColor),
-                                    const SizedBox(height: 5),
-                                    index < list.length - 1 ? Container(
-                                        height: 15,
-                                        width: 1,
-                                        color: kPrimaryColor
-                                    ) : Container(),
+                                    Text(list[index]['title']!, style: const TextStyle(
+                                        fontWeight: FontWeight.bold
+                                    ),),
+                                    Flexible(child: Text(list[index]['sub']!)),
                                   ],
                                 ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 2),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(list[index]['title']!, style: const TextStyle(
-                                            fontWeight: FontWeight.bold
-                                        ),),
-                                        Flexible(child: Text(list[index]['sub']!)),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ) : Container();
-                          }, separatorBuilder: (BuildContext context, int index) {
-                          return const SizedBox(height: 10);
-                        },
-                        ),
+                              ),
+                            ],
+                          ) : Container();
+                        }, separatorBuilder: (BuildContext context, int index) {
+                        return const SizedBox(height: 10);
+                      },
                       ),
-                  ),
-                  ElevatedButton(onPressed: () {
-                    setState(() {
-                      currentStep += 1;
-                    });
-                  }, child: const Text('Change Step'))
-                ],
+                    ),
+                    // ElevatedButton(onPressed: () {
+                    //   setState(() {
+                    //     currentStep += 1;
+                    //   });
+                    // }, child: const Text('Change Step'))
+                  ],
+                ),
               )
           ),
-          // ElevatedButton(onPressed: () {
-          //   setState(() {
-          //     currentStep += 1;
-          //   });
-          // }, child: const Text('Change Step'))
           Padding(
-            padding: EdgeInsets.all(15.0),
+            padding: EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15.0),
             child: Text(
               "* Apaliba mitra terkendala datang atau mitra lambat merespon dari jam yang ditetapkan pada saat memesan, anda bisa membatalkan pesanan dengan cara klik tombol batalkan.",style: TextStyle(fontSize: 12.0, color: Colors.black.withOpacity(0.5),),
             )

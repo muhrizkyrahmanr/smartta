@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:smartta/constants/colors.dart';
+import 'package:smartta/otp_verifikasi_page.dart';
 
 class DaftarPage extends StatefulWidget {
   const DaftarPage({Key? key}) : super(key: key);
@@ -29,7 +30,9 @@ class _DaftarPageState extends State<DaftarPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(height: 50,),
+                    SizedBox(height: 6,),
+                    IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.arrow_back, size: 20,)),
+                    SizedBox(height: 20,),
                     Text("Smartta,",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold),),
                     SizedBox(height: 6,),
                     Text("Daftar untuk memulai!",style: TextStyle(fontSize: 20,color: Colors.grey.shade400),),
@@ -152,7 +155,11 @@ class _DaftarPageState extends State<DaftarPage> {
                     Container(
                       height: 50,
                       child: InkWell(
-                        onTap: () => {},
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                            return OtpVerifikasiPage();
+                          }));
+                        },
                         child: Container(
                           width: double.infinity,
                           height: 40,
@@ -194,7 +201,7 @@ class _DaftarPageState extends State<DaftarPage> {
           ),
         ),
       ),
-    );;
+    );
   }
 
   void togglePasswordVisibility() {
