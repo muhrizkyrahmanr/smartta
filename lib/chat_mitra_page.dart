@@ -1,3 +1,4 @@
+import 'package:custom_clippers/custom_clippers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:smartta/constants/colors.dart';
@@ -85,14 +86,210 @@ class _ChatMitraPageState extends State<ChatMitraPage> {
         // ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: SizedBox(
-            width: size.width, height: size.height, child: buildChatMitra()),
+        padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+        child: buildChatMitra()
       ),
+      bottomSheet: bottomSheet(),
     );
   }
 
   buildChatMitra(){
+    return ListView(
+      padding: EdgeInsets.only(bottom: 70),
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(padding: EdgeInsets.only(right: 80),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipPath(
+                    clipper: UpperNipMessageClipper(
+                      MessageType.receive
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                          color: Color(0xFFE1E1E2),
+                      ),
+                      child: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",),
+                    ),
+                    ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10,top: 10),
+                    child: Text("Sen, 5 Des 2022 15.00", style: TextStyle(fontSize: 12.0, color: Colors.grey.shade400,),),
+                  )
+                ],
+              ),
+              ),
+              Container(
+                alignment: Alignment.centerRight,
+                child: Padding(padding: EdgeInsets.only(top: 20, left: 80),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      ClipPath(
+                        clipper: LowerNipMessageClipper(
+                            MessageType.send
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.only(left: 20, top: 10, bottom: 25, right: 20),
+                          decoration: BoxDecoration(
+                            color: kPrimaryColor.withOpacity(0.5),
+                          ),
+                          child: Text("Congue nisi vitae suscipit tellus mauris. Rhoncus urna neque viverra justo nec ultrices dui. Cras tincidunt lobortis feugiat vivamus at augue eget.", style: TextStyle(color: Colors.white),),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Text("Sen, 5 Des 2022 15.00", style: TextStyle(fontSize: 12.0, color: Colors.grey.shade400,),),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Padding(padding: EdgeInsets.only(right: 80),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipPath(
+                      clipper: UpperNipMessageClipper(
+                          MessageType.receive
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFE1E1E2),
+                        ),
+                        child: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 10,top: 10),
+                      child: Text("Sen, 5 Des 2022 15.00", style: TextStyle(fontSize: 12.0, color: Colors.grey.shade400,),),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerRight,
+                child: Padding(padding: EdgeInsets.only(top: 20, left: 80),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      ClipPath(
+                        clipper: LowerNipMessageClipper(
+                            MessageType.send
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.only(left: 20, top: 10, bottom: 25, right: 20),
+                          decoration: BoxDecoration(
+                            color: kPrimaryColor.withOpacity(0.5),
+                          ),
+                          child: Text("Congue nisi vitae suscipit tellus mauris. Rhoncus urna neque viverra justo nec ultrices dui. Cras tincidunt lobortis feugiat vivamus at augue eget.", style: TextStyle(color: Colors.white),),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Text("Sen, 5 Des 2022 15.00", style: TextStyle(fontSize: 12.0, color: Colors.grey.shade400,),),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Padding(padding: EdgeInsets.only(right: 80),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipPath(
+                      clipper: UpperNipMessageClipper(
+                          MessageType.receive
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFE1E1E2),
+                        ),
+                        child: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 10,top: 10),
+                      child: Text("Sen, 5 Des 2022 15.00", style: TextStyle(fontSize: 12.0, color: Colors.grey.shade400,),),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerRight,
+                child: Padding(padding: EdgeInsets.only(top: 20, left: 80),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      ClipPath(
+                        clipper: LowerNipMessageClipper(
+                            MessageType.send
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.only(left: 20, top: 10, bottom: 25, right: 20),
+                          decoration: BoxDecoration(
+                            color: kPrimaryColor.withOpacity(0.5),
+                          ),
+                          child: Text("Congue nisi vitae suscipit tellus mauris. Rhoncus urna neque viverra justo nec ultrices dui. Cras tincidunt lobortis feugiat vivamus at augue eget.", style: TextStyle(color: Colors.white),),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Text("Sen, 5 Des 2022 15.00", style: TextStyle(fontSize: 12.0, color: Colors.grey.shade400,),),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+        )
+      ],
+    );
+  }
+
+  bottomSheet(){
+    return Container(
+      height: 65,
+      decoration: BoxDecoration(
+          color: kWhite,
+          boxShadow: [
+            BoxShadow(color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 2, blurRadius: 10, offset: Offset(0,3)
+            )
+          ]),
+      child: Row(
+        children: [
+          Padding(padding: EdgeInsets.only(left: 10),
+            child: Container(
+              alignment: Alignment.centerRight,
+              width: 270,
+              child: TextFormField(
+                decoration: InputDecoration(hintText: "Ketik pesan",
+                border: InputBorder.none
+                ),
+              ),
+            )
+          ),
+          Spacer(),
+          Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.send, color: kPrimaryColor.withOpacity(0.5), size: 30,
+              ),
+              color: kPrimaryColor.withOpacity(0.5),
+            )
+          )
+        ],
+      ),
+    );
   }
 
 }
