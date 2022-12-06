@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:smartta/alamat_page.dart';
 import 'package:smartta/constants/colors.dart';
 import 'package:smartta/model/model_detail_jasa.dart';
 import 'package:smartta/model/model_menu.dart';
@@ -223,28 +224,35 @@ class _DetailJasaPageState extends State<DetailJasaPage> {
                           SizedBox(
                             height: 8.0,
                           ),
-                          Card(
-                              elevation: 1.0,
-                              margin: EdgeInsets.only(
-                                bottom: 5.0,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0,),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(15.0),
-                                child: Row(
-                                  children: [
-                                    Text("Pilih Alamat"),
-                                    Spacer(),
-                                    const Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 16,
-                                      color: kPrimaryColor,
-                                    ),
-                                  ],
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context){
+                                return AlamatPage();
+                              }));
+                            },
+                            child: Card(
+                                elevation: 1.0,
+                                margin: EdgeInsets.only(
+                                  bottom: 5.0,
                                 ),
-                              )
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0,),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(15.0),
+                                  child: Row(
+                                    children: [
+                                      Text("Pilih Alamat"),
+                                      Spacer(),
+                                      const Icon(
+                                        Icons.arrow_forward_ios,
+                                        size: 16,
+                                        color: kPrimaryColor,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                            ),
                           ),
                           SizedBox(
                             height: 8.0,
