@@ -4,6 +4,7 @@ import 'package:smartta/constants/colors.dart';
 import 'package:smartta/detailartikel_page.dart';
 import 'package:smartta/menu_card.dart';
 import 'package:smartta/model/model_menu.dart';
+import 'package:smartta/notification_page.dart';
 import 'package:smartta/services/services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -293,6 +294,18 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                      return NotificationPage();
+                    }));
+                  },
+                  icon: Icon(
+                    Icons.notifications,
+                    size: 35,
+                  ),
+                  color: kWhite
                 )
               ],
             )
