@@ -181,6 +181,30 @@ class _DetailTransaksiState extends State<DetailTransaksi> {
                 color: Colors.grey.withOpacity(0.10),
               ),
               child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Catatan", style: TextStyle(fontSize: 12.0, color: Colors.grey.shade400,)),
+                          SizedBox(
+                            height: 8.0,
+                          ),
+                          Text("Saya butuh segera !")
+                        ],
+                      ),
+                    ],
+                  )
+              )
+          ),
+          Container(
+              margin: EdgeInsets.all(15.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5.0),
+                color: Colors.grey.withOpacity(0.10),
+              ),
+              child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
