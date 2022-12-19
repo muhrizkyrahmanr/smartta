@@ -24,11 +24,43 @@ class _NotificationPageState extends State<NotificationPage> {
               fontSize: 16, fontWeight: FontWeight.w600, color: kWhite),
         )
       ),
-      body: SizedBox(
-          width: size.width, height: size.height, child: buildNotification()),
+      body: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: buildNotification()
+      ),
     );
   }
 
-  buildNotification() {
+  Widget buildNotification() {
+    return Card(
+        child: Container(
+          height: 115,
+          child: ListTile(
+              title: Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.notifications,
+                      size: 22,
+                      color: kPrimaryColor.withOpacity(0.5),
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      "Transaksi",
+                      style: TextStyle(color: kPrimaryColor.withOpacity(0.5),),
+                      overflow: TextOverflow.fade,
+                    ),
+                  ],
+                ),
+              ),
+              subtitle: Text(
+                "Pesanan dengan nomor transaksi #123 telah dikonfirmasi oleh mitra. Silahkan cek di transaksi untuk perkembangan selanjutnya",
+              )
+          ),
+        )
+    );
   }
 }
