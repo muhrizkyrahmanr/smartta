@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "893869496463",
+    "project_id": "smartta-17a72",
+    "storage_bucket": "smartta-17a72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893869496463:android:f8f947c501b5832c7138fa",
+        "android_client_info": {
+          "package_name": "com.example.smartta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893869496463-af5e7jevmu1e24k8f17fji7i9np8rc1k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLdk1lBQObMVe6aQcrrkvxMHjOfJUtFqc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893869496463-af5e7jevmu1e24k8f17fji7i9np8rc1k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

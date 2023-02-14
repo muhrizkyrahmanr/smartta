@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smartta/constants/colors.dart';
 import 'package:smartta/home_page.dart';
 import 'package:smartta/constants/size.dart';
+import 'package:smartta/login_page.dart';
 import 'package:smartta/profil_page.dart';
 import 'package:smartta/transaksi_page.dart';
 
@@ -15,6 +17,12 @@ class BaseScreen extends StatefulWidget {
 
 class _BaseScreenState extends State<BaseScreen> {
   int _selectIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    cekLogin();
+  }
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
@@ -73,5 +81,18 @@ class _BaseScreenState extends State<BaseScreen> {
         },
       ),
     );
+  }
+
+  void cekLogin() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    if(preferences.getString("id") == null){
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => LoginPage(),
+        ),
+            (route) => false,
+      );
+    }
   }
 }

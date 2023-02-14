@@ -79,4 +79,30 @@ class Services {
       throw Exception('Failed to load');
     }
   }
+
+  LoginService(String email, String password, String token) async {
+    var url = Uri.parse("$API_V2/userMasyarakat/login");
+    try{
+      final response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': 'application/json'
+          },
+          body: jsonEncode(<String, String>{
+            'email': email,
+            'password': password,
+            'token': token
+          }));
+      var responseJson = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        return responseJson;
+      } else if(response.statusCode == 401){
+        return 401;
+      } else {
+        return;
+      }
+    } on Exception catch (_) {
+      return;
+    }
+  }
 }

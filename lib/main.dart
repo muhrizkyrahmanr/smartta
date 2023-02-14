@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:smartta/constants/material_colors.dart';
 import 'package:smartta/base_screen.dart';
@@ -17,6 +18,8 @@ class MyHttpOverrides extends HttpOverrides {
 Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(App());
 }
 
@@ -36,7 +39,7 @@ class _AppState extends State<App> {
           fontFamily: 'poppins'
         ),
         debugShowCheckedModeBanner: false,
-        home: LoginPage()
+        home: BaseScreen()
     );
   }
 }
