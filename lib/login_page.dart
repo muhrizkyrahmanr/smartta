@@ -25,6 +25,9 @@ class _LoginPageState extends State<LoginPage> {
   late bool _showPassword = true;
   late bool _isLoading = false;
 
+  late bool _validEmail = true;
+  late bool _validPassword = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,11 +56,21 @@ class _LoginPageState extends State<LoginPage> {
                     children: <Widget>[
                       TextFormField(
                         controller: _controllerEmail,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           labelText: "Email",
-                          prefixIcon: Icon(Icons.account_circle_outlined),
+                          prefixIcon: Icon(
+                              Icons.account_circle_outlined,
+                              color: _validEmail ? null : Colors.red,
+                          ),
                           labelStyle: TextStyle(fontSize: 14,color: Colors.grey.shade400),
                           enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade300,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(
                               color: Colors.grey.shade300,
@@ -70,7 +83,26 @@ class _LoginPageState extends State<LoginPage> {
                               )
                           ),
                         ),
-                        validator: (value) => EmailValidator.validate(_controllerEmail.text) ? null : "Silakan masukkan email yang valid",
+                        validator: (value) {
+                          if(value!.isEmpty){
+                            setState(() {
+                              _validEmail = false;
+                            });
+                            return 'Email masih kosong';
+                          }else{
+                            if(!EmailValidator.validate(_controllerEmail.text)){
+                              setState(() {
+                                _validEmail = false;
+                              });
+                              return 'Silahkan masukkan email yang valid';
+                            }else{
+                              setState(() {
+                                _validEmail = true;
+                              });
+                            }
+                          }
+                          return null;
+                        }
                       ),
                       SizedBox(height: 16,),
                       TextFormField(
@@ -78,8 +110,17 @@ class _LoginPageState extends State<LoginPage> {
                         obscureText: _showPassword,
                         decoration: InputDecoration(
                           labelText: "Password",
-                          prefixIcon: Icon(Icons.lock_outline),
+                          prefixIcon: Icon(
+                              Icons.lock_outline,
+                              color: _validPassword ? null : Colors.red,
+                          ),
                           labelStyle: TextStyle(fontSize: 14,color: Colors.grey.shade400),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade300,
+                            ),
+                          ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(
@@ -95,17 +136,26 @@ class _LoginPageState extends State<LoginPage> {
                           suffixIcon: GestureDetector(
                             onTap: togglePasswordVisibility,
                             child: _showPassword
-                                ? const Icon(
+                                ? Icon(
                               Icons.visibility_off,
+                              color: _validPassword ? null : Colors.red,
                             )
-                                : const Icon(
+                                : Icon(
                               Icons.visibility,
+                              color: _validPassword ? null : Colors.red,
                             ),
                           ),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
+                            setState(() {
+                              _validPassword = false;
+                            });
                             return 'Password masih kosong';
+                          }else{
+                            setState(() {
+                              _validPassword = true;
+                            });
                           }
                           return null;
                         },
