@@ -53,6 +53,9 @@ class _MenuCardState extends State<MenuCard> {
               Image.network(
                 "${widget.modelMenu!.url_gambar}",
                 height: 24.0,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container();
+                },
               ),
               const SizedBox(
                 height: 10,

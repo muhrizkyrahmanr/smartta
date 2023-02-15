@@ -21,7 +21,6 @@ class _BaseScreenState extends State<BaseScreen> {
   @override
   void initState() {
     super.initState();
-    cekLogin();
   }
 
   static const List<Widget> _widgetOptions = <Widget>[
@@ -81,18 +80,5 @@ class _BaseScreenState extends State<BaseScreen> {
         },
       ),
     );
-  }
-
-  void cekLogin() async{
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    if(preferences.getString("id") == null){
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => LoginPage(),
-        ),
-            (route) => false,
-      );
-    }
   }
 }

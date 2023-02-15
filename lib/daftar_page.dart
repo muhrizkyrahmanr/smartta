@@ -6,7 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smartta/constants/colors.dart';
+import 'package:smartta/login_page.dart';
 import 'package:smartta/otp_verifikasi_page.dart';
+import 'package:smartta/services/services.dart';
 
 class DaftarPage extends StatefulWidget {
   const DaftarPage({Key? key}) : super(key: key);
@@ -33,6 +35,8 @@ class _DaftarPageState extends State<DaftarPage> {
   late bool _validNoHP = true;
 
   var _imageFile;
+
+  late bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -348,21 +352,25 @@ class _DaftarPageState extends State<DaftarPage> {
                         height: 50,
                         child: InkWell(
                           onTap: (){
-                            if (_formKey.currentState!.validate()) {
-                              if(_imageFile != null){
-                                Navigator.push(context, MaterialPageRoute(builder: (context){
-                                  return OtpVerifikasiPage();
-                                }));
-                              }else{
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  content: Row(
-                                    children: [
-                                      Icon(Icons.info_outline, size: 20, color: Colors.red,),
-                                      SizedBox(width: 8),
-                                      Flexible(child: Text("Gagal! anda belum mengupload foto",style: const TextStyle(fontFamily: 'poppins'),))
-                                    ],
-                                  ),shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),behavior: SnackBarBehavior.floating,
-                                  elevation: 5,));
+                            if (!_isLoading) {
+                              if (_formKey.currentState!.validate()) {
+                                if(_imageFile != null){
+                                  showAlertDialogLoading(context);
+                                  daftar();
+                                  // Navigator.push(context, MaterialPageRoute(builder: (context){
+                                  //   return OtpVerifikasiPage();
+                                  // }));
+                                }else{
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Row(
+                                      children: [
+                                        Icon(Icons.info_outline, size: 20, color: Colors.red,),
+                                        SizedBox(width: 8),
+                                        Flexible(child: Text("Gagal! anda belum mengupload foto",style: const TextStyle(fontFamily: 'poppins'),))
+                                      ],
+                                    ),shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),behavior: SnackBarBehavior.floating,
+                                    elevation: 5,));
+                                }
                               }
                             }
                           },
@@ -430,5 +438,62 @@ class _DaftarPageState extends State<DaftarPage> {
     setState(() {
       _imageFile = filePath;
     });
+  }
+
+  void daftar() async{
+    var response = await Services().DaftarService(_controllerEmail.text, _controllerPassword.text, _controllerNomorHP.text, _controllerNama.text, _imageFile);
+    if(response != null && response != 401) {
+      if(response['status'] == true){
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => LoginPage(),
+          ),
+              (route) => false,
+        );
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.info_outline, size: 20, color: Colors.red,),
+              SizedBox(width: 8),
+              Flexible(child: Text("Gagal! email sudah terdaftar",style: const TextStyle(fontFamily: 'poppins'),))
+            ],
+          ),shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),behavior: SnackBarBehavior.floating,
+          elevation: 5,));
+        Navigator.pop(context);
+      }
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Row(
+          children: [
+            Icon(Icons.info_outline, size: 20, color: Colors.red,),
+            SizedBox(width: 8),
+            Flexible(child: Text("Gagal! terhubung keserver",style: const TextStyle(fontFamily: 'poppins'),))
+          ],
+        ),shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),behavior: SnackBarBehavior.floating,
+        elevation: 5,));
+      Navigator.pop(context);
+    }
+  }
+
+  showAlertDialogLoading(BuildContext context){
+    AlertDialog alert=AlertDialog(
+      content: Row(
+        children: [
+          const CircularProgressIndicator(),
+          Container(margin: const EdgeInsets.only(left: 15), child: const Text("Loading...",style: const TextStyle(fontFamily: 'poppins'),)),
+        ],),
+    );
+    showDialog(
+      barrierDismissible: false,
+      context:context,
+      builder:(BuildContext context){
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: alert,
+        );
+      },
+    );
   }
 }

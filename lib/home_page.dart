@@ -175,7 +175,13 @@ class _HomePageState extends State<HomePage> {
                                           Spacer(),
                                           ClipRRect(
                                             borderRadius: BorderRadius.circular(10),
-                                            child: Image.network(listArtikel[i].url_gambar,width: 80,),
+                                            child: Image.network(
+                                              listArtikel[i].url_gambar,
+                                              width: 80,
+                                              errorBuilder: (context, error, stackTrace) {
+                                                return Container();
+                                              },
+                                            ),
                                           )
                                         ],
                                       )
@@ -236,7 +242,12 @@ class _HomePageState extends State<HomePage> {
                               ],
                             ),
                             Spacer(),
-                            Image.network(listArtikel[i].url_gambar,width: 80,),
+                            Image.network(listArtikel[i].url_gambar,
+                              width: 80,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container();
+                              },
+                            ),
                           ],
                         )
                       ],

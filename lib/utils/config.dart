@@ -1,1 +1,1 @@
-const String API_V2 = "https://fe2b-125-162-215-217.ap.ngrok.io/api";
+const String API_V2 = "https://71ee-125-162-208-94.ap.ngrok.io/api";

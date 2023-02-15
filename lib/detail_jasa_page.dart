@@ -91,7 +91,12 @@ class _DetailJasaPageState extends State<DetailJasaPage> {
                             ),
                             child: Column(
                               children: [
-                                Image.network("${modelDetailJasa!.background}"),
+                                Image.network(
+                                    "${modelDetailJasa!.background}",
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Container();
+                                    },
+                                ),
                                 Padding(
                                   padding: EdgeInsets.all(8.0),
                                   child: Column(
@@ -396,7 +401,17 @@ class _DetailJasaPageState extends State<DetailJasaPage> {
           ),
           child: Column(
             children: [
-              Image.network("${modelDetailJasa!.background}"),
+              Image.network(
+                "${modelDetailJasa!.background}",
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    alignment: Alignment.center,
+                    child: const Text(
+                      "Gagal Memuat Gambar!",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  );
+                },),
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Column(

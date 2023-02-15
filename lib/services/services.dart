@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:smartta/model/model_artikel.dart';
@@ -97,6 +98,34 @@ class Services {
       if (response.statusCode == 200) {
         return responseJson;
       } else if(response.statusCode == 401){
+        return 401;
+      } else {
+        return;
+      }
+    } on Exception catch (_) {
+      return;
+    }
+  }
+
+  DaftarService(String email, String password, String no_hp, String nama, File foto) async {
+    var url = Uri.parse("$API_V2/userMasyarakat/create");
+    try{
+      var request = http.MultipartRequest('POST', url);
+      request.fields['email'] = email;
+      request.fields['password'] = password;
+      request.fields['no_hp'] = no_hp;
+      request.fields['nama'] = nama;
+      request.files.add(await http.MultipartFile.fromPath('foto', foto.path));
+      var res = await request.send();
+      final respStr = await http.Response.fromStream(res);
+      if (res.statusCode == 200) {
+        if (respStr.body == 'null') {
+          return;
+        } else {
+          var responseJson = json.decode(respStr.body);
+          return responseJson;
+        }
+      } else if(res.statusCode == 401){
         return 401;
       } else {
         return;

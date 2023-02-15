@@ -69,7 +69,13 @@ class _DetailTransaksiState extends State<DetailTransaksi> {
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Image.network("http://smartta.id/assets/serviceIcon/Install%20dan%20Service.png", height: 35.0,),
+                  child: Image.network(
+                    "http://smartta.id/assets/serviceIcon/Install%20dan%20Service.png",
+                    height: 35.0,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container();
+                    },
+                  ),
                 )
               ),
               subtitle: Column(

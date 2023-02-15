@@ -48,7 +48,13 @@ class _ListPesananState extends State<ListPesanan> {
                         Text("24 Nov 2022", style: TextStyle(fontSize: 14.0, color: Colors.grey),)
                       ],
                     ),
-                    leading: Image.network("http://smartta.id/assets/serviceIcon/Install%20dan%20Service.png", height: 35.0,),
+                    leading: Image.network(
+                      "http://smartta.id/assets/serviceIcon/Install%20dan%20Service.png",
+                      height: 35.0,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container();
+                      },
+                    ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
