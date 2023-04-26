@@ -235,7 +235,7 @@ class _LoginPageState extends State<LoginPage> {
     String? token = await FirebaseMessaging.instance.getToken();
     var response = await Services().LoginService(_controllerEmail.text, _controllerPassword.text, token.toString());
     if(response != null && response != 401) {
-      if(response['status'] == true){
+      if(response['message'] == "Success"){
         SharedPreferences preferences = await SharedPreferences.getInstance();
         await preferences.setString("id", response['data']['id'].toString());
         await preferences.setString("email", response['data']['email']);

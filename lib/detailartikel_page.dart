@@ -35,7 +35,7 @@ class _DetailArtikelPageState extends State<DetailArtikelPage> {
 
   Widget buildDetailArtikel(){
     return WebView(
-        initialUrl: 'https://smartta.id/blog/${widget.slug}'
+        initialUrl: 'http://10.153.16.164/blog/${widget.slug}'
     );
   }
 }

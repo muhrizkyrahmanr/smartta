@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:smartta/constants/colors.dart';
 import 'package:smartta/maps_page.dart';
+import 'package:smartta/services/services.dart';
 
 class AlamatPage extends StatefulWidget {
   const AlamatPage({Key? key}) : super(key: key);
@@ -11,6 +12,23 @@ class AlamatPage extends StatefulWidget {
 }
 
 class _AlamatPageState extends State<AlamatPage> {
+  List ListAlamat = [];
+
+  Future _getAlamat() async {
+    var response = await Services().getAlamat("081345975566");
+    if (!mounted) return;
+    setState(() {
+      ListAlamat = response;
+    });
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    _getAlamat();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -40,36 +58,37 @@ class _AlamatPageState extends State<AlamatPage> {
       ),
       body: Padding(
         padding: EdgeInsets.all(8.0),
-        child: buildAlamat()
-      ),
-    );
-  }
-
-  Widget buildAlamat() {
-    return GestureDetector(
-      onTap: () => {
-        Navigator.of(context).pop()
-      },
-      child: Card(
-          child: Container(
-            height: 80,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ListTile(
-                    title: Text(
-                      "Kantor Disdik",
-                      overflow: TextOverflow.fade,
-                      maxLines: 1,
-                    ),
-                    subtitle: Text(
-                      "Jl. Perintis Kemerdekaan KM 10, Tamalanrea Indah, Kec. Tamalanrea, Kota Makassar",
-                      maxLines: 1,
+        child: ListView.builder(
+            itemCount: ListAlamat.length,
+            itemBuilder: (context, i) {
+              return GestureDetector(
+                onTap: () => {
+                  Navigator.of(context).pop()
+                },
+                child: Card(
+                    child: Container(
+                      height: 80,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ListTile(
+                              title: Text(
+                                "${ListAlamat[i].nama}",
+                                overflow: TextOverflow.fade,
+                                maxLines: 1,
+                              ),
+                              subtitle: Text(
+                                "${ListAlamat[i].alamat}, ${ListAlamat[i].kecamatan}, ${ListAlamat[i].kota}, ${ListAlamat[i].provinsi}",
+                                maxLines: 1,
+                              )
+                          ),
+                        ],
+                      ),
                     )
                 ),
-              ],
-            ),
-          )
+              );
+            }
+        )
       ),
     );
   }

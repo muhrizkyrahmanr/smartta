@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:smartta/model/model_alamat.dart';
 import 'package:smartta/model/model_artikel.dart';
 import 'package:smartta/model/model_banner.dart';
 import 'package:smartta/model/model_detail_jasa.dart';
@@ -129,6 +130,33 @@ class Services {
         return 401;
       } else {
         return;
+      }
+    } on Exception catch (_) {
+      return;
+    }
+  }
+
+  getAlamat(String noHp) async {
+    var url = Uri.parse("$API_V2/alamatMasyarakat/getList");
+    try{
+      final response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': 'application/json'
+          },
+          body: jsonEncode(<String, String>{
+            'no_hp': noHp,
+          }));
+      var responseJson = json.decode(response.body);
+      if (response.statusCode == 200) {
+        if (response.body == '{"data":null}') {
+          return throw Exception('No results');
+        } else {
+          var data = responseJson['data'];
+          return data.map((p) => ModelAlamat.fromJson(p)).toList();
+        }
+      } else {
+        throw Exception('Failed to load');
       }
     } on Exception catch (_) {
       return;
